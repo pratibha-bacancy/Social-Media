@@ -26,6 +26,10 @@ public class post {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonIgnore
 	private user User;
+	
+	public void setUser(user user) {
+		User = user;
+	}
 
 	public post() {
 		super();

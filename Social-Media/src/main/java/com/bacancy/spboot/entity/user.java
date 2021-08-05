@@ -3,6 +3,7 @@ package com.bacancy.spboot.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ public class user {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	@Column(name="uname")
 	private String name;
 	private String email;
 	private Date dateOfBirth;
