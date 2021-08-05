@@ -37,7 +37,7 @@ public class userController {
 		return UserService.getAllUsers();
 	}
 
-	@GetMapping("/user/{id}")
+	@GetMapping("/users/{id}")
 	public EntityModel<user> getUser(@PathVariable int id) {
 		user User = UserService.getUser(id);
 		if (User == null)
@@ -48,17 +48,17 @@ public class userController {
 		return resource;
 	}
 
-	@PostMapping("/user")
+	@PostMapping("/users")
 	public void addUser(@RequestBody user User) {
 		UserService.addUser(User);
 	}
 
-	@PutMapping("/user/{id}")
+	@PutMapping("/users/{id}")
 	public void updateUser(@RequestBody user User, @PathVariable int id) {
 		UserService.updateUser(id, User);
 	}
 
-	@DeleteMapping("/user/{id}")
+	@DeleteMapping("/users/{id}")
 	public void deleteUser(@PathVariable int id) {
 		UserService.deleteUser(id);
 	}
@@ -86,14 +86,26 @@ public class userController {
 		return ResponseEntity.created(location).build();
 	}
 
-	@PutMapping("/users/{id}/posts/{id}")
-	public void updateUserPost(@RequestBody post Post, @PathVariable int id) {
+	@PutMapping("/users/{id}/posts")
+	public void updateUserPost(@PathVariable int id, @RequestBody post Post) {
 		Optional<user> userOptional = Optional.of(UserRepository.findById(id));
 		if (!userOptional.isPresent()) {
 			throw new UserNotFoundException("id: " + id);
 		}
-		
+		user User = userOptional.get();
+		Post.setUser(User);
+		PostRepository.save(Post);
+	}
+	
+	@DeleteMapping("/users/{id}/posts")
+	public void deleteUserPost(@PathVariable int id, @RequestBody post Post) {
+		Optional<user> userOptional = Optional.of(UserRepository.findById(id));
+		if (!userOptional.isPresent()) {
+			throw new UserNotFoundException("id: " + id);
+		} 
+		user User = userOptional.get();
+		Post.setUser(User);
+		PostRepository.delete(Post);
 	}
 
-	
 }

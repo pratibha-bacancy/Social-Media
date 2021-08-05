@@ -22,22 +22,22 @@ public class postController {
 		return PostServices.getAllPosts();
 	}
 
-	@GetMapping("/post/{id}")
+	@GetMapping("/posts/{id}")
 	public post getPost(@PathVariable int id) {
 		return PostServices.getPost(id);
 	}
 
-	@PostMapping("/postAdd")
+	@PostMapping("/posts")
 	public void addPost(@RequestBody post Post) {
 		PostServices.addPost(Post);
 	}
 
-	@PutMapping("/postUpdate/{id}")
+	@PutMapping("/posts/{id}")
 	public void updatePost(@RequestBody post Post, @PathVariable int id) {
 		PostServices.updatePost(id, Post);
 	}
 
-	@DeleteMapping("/postDelete/{id}")
+	@DeleteMapping("/posts/{id}")
 	public void deletePost(@PathVariable int id) {
 		PostServices.deletePost(id);
 	}
