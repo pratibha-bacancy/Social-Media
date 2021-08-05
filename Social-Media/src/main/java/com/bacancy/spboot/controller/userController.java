@@ -58,16 +58,26 @@ public class userController {
 	}
 
 	@GetMapping("/users/{id}/posts")
-	public List<post> retrieveAllUsers(@PathVariable int id) {
+	public List<post> retrievePost(@PathVariable int id) {
 		Optional<user> userOptional = Optional.of(UserRepository.findById(id));
+		if (!userOptional.isPresent()) {
+			throw new UserNotFoundException("id: " + id);
+		}
 		return userOptional.get().getPosts();
 	}
 
 	@PostMapping("/users/{id}/posts")
-	public ResponseEntity<Object> createPost(@PathVariable int id,@RequestBody post Post) {
-		Optional<user> userOptional=Optional.of(UserRepository.findById(id));
+	public ResponseEntity<Object> createUserPost(@PathVariable int id, @RequestBody post Post) {
+		Optional<user> userOptional = Optional.of(UserRepository.findById(id));
+		if (!userOptional.isPresent()) {
+			throw new UserNotFoundException("id: " + id);
+		}
 		user User = userOptional.get();
-		return null;
+		Post.setUser(User);
+		PostRepository.save(Post);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(Post.getId())
+				.toUri();
+		return ResponseEntity.created(location).build();
 	}
 }
 		
