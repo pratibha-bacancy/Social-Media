@@ -30,7 +30,7 @@ public class User {
 	@Column(name="date_of_birth")
 	private Date dateOfBirth;
 	
-	@OneToMany(mappedBy="user")
+	@OneToMany
 	private List<Post> Posts;
 	
 	public User() {
