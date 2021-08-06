@@ -4,42 +4,42 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.bacancy.spboot.entity.post;
-import com.bacancy.spboot.service.postServices;
+import com.bacancy.spboot.entity.Post;
+import com.bacancy.spboot.service.PostServices;
 
 @RestController
-public class postController {
+public class PostController {
+	
 	@Autowired
-	private postServices PostServices;
+	private PostServices postServices;
 	
 	@GetMapping("/posts")
-	public List<post> getAllPosts() {
-		return PostServices.getAllPosts();
+	public List<Post> getAllPosts() {
+		return postServices.getAllPosts();
 	}
 
 	@GetMapping("/posts/{id}")
-	public post getPost(@PathVariable int id) {
-		return PostServices.getPost(id);
+	public Post getPost(int id) {
+		return postServices.getPost(id);
 	}
 
 	@PostMapping("/posts")
-	public void addPost(@RequestBody post Post) {
-		PostServices.addPost(Post);
+	public void addPost(@RequestBody Post Post) {
+		postServices.addPost(Post);
 	}
 
 	@PutMapping("/posts/{id}")
-	public void updatePost(@RequestBody post Post, @PathVariable int id) {
-		PostServices.updatePost(id, Post);
+	public void updatePost(@RequestBody Post Post) {
+		postServices.updatePost(Post);
 	}
 
 	@DeleteMapping("/posts/{id}")
-	public void deletePost(@PathVariable int id) {
-		PostServices.deletePost(id);
+	public void deletePost(int id) {
+		postServices.deletePost(id);
 	}
 
 }

@@ -4,36 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import com.bacancy.spboot.entity.user;
-import com.bacancy.spboot.repository.userRepository;
+import com.bacancy.spboot.entity.User;
+import com.bacancy.spboot.repository.UserRepository;
 
 @Configuration
-public class userService {
+public class UserService {
+	
 	@Autowired
-	private userRepository UserRepository;
+	private UserRepository userRepository;
 
-	public List<user> getAllUsers() {
-		List<user> User = new ArrayList<>();
-		UserRepository.findAll().forEach(User::add);
+	public List<User> getAllUsers() {
+		List<User> User = new ArrayList<>();
+		userRepository.findAll().forEach(User::add);
 		return User;
 	}
 
-	public user getUser(int id) {
-		return UserRepository.findById(id);
+	public User getUser(int id) {
+		return userRepository.findById(id);
 	}
 
-	public void addUser(user u) {
-		UserRepository.save(u);
+	public void addUser(User u) {
+		userRepository.save(u);
 	}
 
-	public void updateUser(int id, user User) {
-		UserRepository.save(User);
-
+	public void updateUser(int id, User user) {
+		userRepository.save(user);
 	}
 
 	public void deleteUser(int id) {
-		UserRepository.deleteById(id);
-
+		userRepository.deleteById(id);
 	}
 
 }

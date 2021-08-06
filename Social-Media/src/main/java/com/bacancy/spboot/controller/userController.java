@@ -14,48 +14,47 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.bacancy.spboot.entity.post;
-import com.bacancy.spboot.entity.user;
+import com.bacancy.spboot.entity.Post;
+import com.bacancy.spboot.entity.User;
 import com.bacancy.spboot.exception.UserNotFoundException;
-import com.bacancy.spboot.repository.postRepository;
-import com.bacancy.spboot.repository.userRepository;
-import com.bacancy.spboot.service.userService;
+import com.bacancy.spboot.repository.PostRepository;
+import com.bacancy.spboot.repository.UserRepository;
+import com.bacancy.spboot.service.UserService;
 
 @RestController
-public class userController {
+public class UserController {
 
 	@Autowired
-	private userService UserService;
+	private UserService UserService;
+
 	@Autowired
-	private userRepository UserRepository;
+	private UserRepository userRepository;
+
 	@Autowired
-	private postRepository PostRepository;
+	private PostRepository postRepository;
 
 	@GetMapping("/users")
-	public List<user> getAllUser() {
+	public List<User> getAllUsers() {
 		return UserService.getAllUsers();
 	}
 
 	@GetMapping("/users/{id}")
-	public EntityModel<user> getUser(@PathVariable int id) {
-		user User = UserService.getUser(id);
-		if (User == null)
+	public EntityModel<User> getOneUser(@PathVariable int id) {
+		User user = UserService.getUser(id);
+		if (user == null)
 			throw new UserNotFoundException("id-" + id);
-
-		EntityModel<user> resource = EntityModel.of(User);
-
+		EntityModel<User> resource = EntityModel.of(user);
 		return resource;
 	}
 
 	@PostMapping("/users")
-	public void addUser(@RequestBody user User) {
-		UserService.addUser(User);
+	public void addUser(@RequestBody User user) {
+		UserService.addUser(user);
 	}
 
 	@PutMapping("/users/{id}")
-	public void updateUser(@RequestBody user User, @PathVariable int id) {
-		UserService.updateUser(id, User);
+	public void updateUser(@RequestBody User user, @PathVariable int id) {
+		UserService.updateUser(id, user);
 	}
 
 	@DeleteMapping("/users/{id}")
@@ -64,8 +63,8 @@ public class userController {
 	}
 
 	@GetMapping("/users/{id}/posts")
-	public List<post> retrievePost(@PathVariable int id) {
-		Optional<user> userOptional = Optional.of(UserRepository.findById(id));
+	public List<Post> retrievePost(@PathVariable int id) {
+		Optional<User> userOptional = Optional.of(userRepository.findById(id));
 		if (!userOptional.isPresent()) {
 			throw new UserNotFoundException("id: " + id);
 		}
@@ -73,39 +72,39 @@ public class userController {
 	}
 
 	@PostMapping("/users/{id}/posts")
-	public ResponseEntity<Object> createUserPost(@PathVariable int id, @RequestBody post Post) {
-		Optional<user> userOptional = Optional.of(UserRepository.findById(id));
+	public ResponseEntity<Object> createUserPost(@PathVariable int id, @RequestBody Post Post) {
+		Optional<User> userOptional = Optional.of(userRepository.findById(id));
 		if (!userOptional.isPresent()) {
 			throw new UserNotFoundException("id: " + id);
 		}
-		user User = userOptional.get();
-		Post.setUser(User);
-		PostRepository.save(Post);
+		User user = userOptional.get();
+		Post.setUser(user);
+		postRepository.save(Post);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(Post.getId())
 				.toUri();
 		return ResponseEntity.created(location).build();
 	}
 
 	@PutMapping("/users/{id}/posts")
-	public void updateUserPost(@PathVariable int id, @RequestBody post Post) {
-		Optional<user> userOptional = Optional.of(UserRepository.findById(id));
+	public void updateUserPost(@PathVariable int id, @RequestBody Post Post) {
+		Optional<User> userOptional = Optional.of(userRepository.findById(id));
 		if (!userOptional.isPresent()) {
 			throw new UserNotFoundException("id: " + id);
 		}
-		user User = userOptional.get();
-		Post.setUser(User);
-		PostRepository.save(Post);
+		User user = userOptional.get();
+		Post.setUser(user);
+		postRepository.save(Post);
 	}
-	
+
 	@DeleteMapping("/users/{id}/posts")
-	public void deleteUserPost(@PathVariable int id, @RequestBody post Post) {
-		Optional<user> userOptional = Optional.of(UserRepository.findById(id));
+	public void deleteUserPost(@PathVariable int id, @RequestBody Post Post) {
+		Optional<User> userOptional = Optional.of(userRepository.findById(id));
 		if (!userOptional.isPresent()) {
 			throw new UserNotFoundException("id: " + id);
-		} 
-		user User = userOptional.get();
-		Post.setUser(User);
-		PostRepository.delete(Post);
+		}
+		User user = userOptional.get();
+		Post.setUser(user);
+		postRepository.delete(Post);
 	}
 
 }

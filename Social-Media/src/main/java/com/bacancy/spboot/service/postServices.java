@@ -4,36 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import com.bacancy.spboot.entity.post;
-import com.bacancy.spboot.repository.postRepository;
+import com.bacancy.spboot.entity.Post;
+import com.bacancy.spboot.repository.PostRepository;
 
 @Configuration
-public class postServices {
+public class PostServices {
+
 	@Autowired
-	private postRepository PostRepository;
+	private PostRepository postRepository;
 
-	public List<post> getAllPosts() {
-		List<post> Post = new ArrayList<>();
-		PostRepository.findAll().forEach(Post::add);
-		return Post;
+	public List<Post> getAllPosts() {
+		List<Post> posts = new ArrayList<>();
+		postRepository.findAll().forEach(posts::add);
+		return posts;
 	}
 
-	public post getPost(int id) {
-		return PostRepository.findById(id);
+	public Post getPost(int id) {
+		return postRepository.findById(id);
 	}
 
-	public void addPost(post p) {
-		PostRepository.save(p);
+	public void addPost(Post p) {
+		postRepository.save(p);
 	}
 
-	public void updatePost(int id, post Post) {
-		PostRepository.save(Post);
-
+	public void updatePost(Post Post) {
+		postRepository.save(Post);
 	}
 
 	public void deletePost(int id) {
-		PostRepository.deleteById(id);
-
+		postRepository.deleteById(id);
 	}
 
 }

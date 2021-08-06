@@ -2,7 +2,6 @@ package com.bacancy.spboot.entity;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,42 +11,50 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
-public class user {
+public class User {
+	
 	@Id
 	@GeneratedValue
+	@Column(name="id")
 	private Integer id;
-	@Column(name="uname")
-	private String name;
-	private String email;
-	private Date dateOfBirth;
-	private String address;
-	@OneToMany(mappedBy="User")
-	private List<post> posts;
 	
+	@Column(name="user_name")
+	private String name;
+	
+	@Column(name="email")
+	private String email;
+	
+	@Column(name="address")
+	private String address;
+	
+	@Column(name="date_of_birth")
+	private Date dateOfBirth;
+	
+	@OneToMany(mappedBy="user")
+	private List<Post> Posts;
+	
+	public User() {
 
-	public List<post> getPosts() {
-		return posts;
 	}
 
-	public void setPosts(List<post> posts) {
-		this.posts = posts;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public user() {
-
-	}
-
-	public user(int id, String name, String email, Date dateOfBirth, String address) {
-		super();
+	public User(int id, String name, String email, Date dateOfBirth, String address) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.dateOfBirth = dateOfBirth;
 		this.address = address;
+	}
+	
+	public List<Post> getPosts() {
+		return Posts;
+	}
+
+	public void setPosts(List<Post> Posts) {
+		this.Posts = Posts;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public int getId() {
@@ -89,5 +96,5 @@ public class user {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 }

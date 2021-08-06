@@ -1,47 +1,56 @@
 package com.bacancy.spboot.entity;
 
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "post")
-public class post {
+public class Post {
+	
 	@Id
 	@GeneratedValue
 	private Integer id;
-	private String postname;
+	
+	@Column(name="post_name")
+	private String postName;
+	
+	@Column(name="details")
 	private String details;
+	
+	@Column(name="tags")
 	private String tags;
-	private int likes;
+	
+	@Column(name="likes")
+	private Integer likes;
+	
+	@Column(name="comments")
 	private String comments;
+	
+	@Column(name="post_created_date")
 	private Date postCreatedDate;
+	
+	@Column(name="post_updated_date")
 	private Date postUpdatedDate;
-	@ManyToOne(fetch=FetchType.LAZY)
+	
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
-	private user User;
-	
-	public void setUser(user user) {
-		User = user;
+	private User user;
+
+	public Post() {
+
 	}
 
-	public post() {
-		super();
-	}
-
-	
-
-	public post(Integer id, String postname, String details, String tags, int likes, String comments,
-			Date postCreatedDate, Date postUpdatedDate) {
-		super();
+	public Post(Integer id, String postName, String details, String tags, Integer likes, String comments,
+			Date postCreatedDate, Date postUpdatedDate, User user) {
 		this.id = id;
-		this.postname = postname;
+		this.postName = postName;
 		this.details = details;
 		this.tags = tags;
 		this.likes = likes;
@@ -50,26 +59,20 @@ public class post {
 		this.postUpdatedDate = postUpdatedDate;
 	}
 
-
-	
 	public Integer getId() {
 		return id;
 	}
-
-
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-
-
-	public String getPostname() {
-		return postname;
+	public String getPostName() {
+		return postName;
 	}
 
-	public void setPostname(String postname) {
-		this.postname = postname;
+	public void setPostName(String postName) {
+		this.postName = postName;
 	}
 
 	public String getDetails() {
@@ -88,11 +91,11 @@ public class post {
 		this.tags = tags;
 	}
 
-	public int getLikes() {
+	public Integer getLikes() {
 		return likes;
 	}
 
-	public void setLikes(int likes) {
+	public void setLikes(Integer likes) {
 		this.likes = likes;
 	}
 
@@ -120,4 +123,8 @@ public class post {
 		this.postUpdatedDate = postUpdatedDate;
 	}
 
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 }
