@@ -35,14 +35,14 @@ public class TagService {
 		Optional<User> user = Optional.of(userRepository.findById(userId));
 		Optional<Post> post = Optional.of(postRepository.findById(postId));
 		if (!post.isPresent()) {
-			throw new NotFoundException("Post does not exist");
+			throw new NotFoundException("Post does not exist!");
 		}
 		User userDto = user.get();
 		Post postDto = post.get();
 		tag.setPost(postDto);
 		tag.setUser(userDto);
 		tag = tagRepository.save(tag);
-		return "Tag Saved";
+		return "Tag Saved!";
 	}
 
 	public void deleteById(int id) {

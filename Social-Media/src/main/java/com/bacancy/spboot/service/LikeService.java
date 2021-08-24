@@ -48,6 +48,7 @@ public class LikeService {
 			if(getUser.equals(userId)) {
 				like.setId(liked.getId());
 				b=true;
+				return "User already liked this post!";
 			}
 		}
 		if(b==false) {
@@ -55,7 +56,7 @@ public class LikeService {
 			like.setUser(user);
 			likeRepository.save(like);
 		}
-		return "Post Liked";
+		return "Liked!";
 	}
 
 }

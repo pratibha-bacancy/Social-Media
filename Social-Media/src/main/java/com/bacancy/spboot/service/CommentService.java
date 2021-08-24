@@ -34,14 +34,14 @@ public class CommentService {
 		Optional<User> user = Optional.of(userRepository.findById(userId));
 		Optional<Post> post = Optional.of(postRepository.findById(postId));
 		if (!post.isPresent()) {
-			throw new NotFoundException("Post does not exist");
+			throw new NotFoundException("Post does not exist!");
 		}
 		User userDto = user.get();
 		Post postDto = post.get();
 		comment.setPost(postDto);
 		comment.setUser(userDto);
 		comment = commentRepository.save(comment);
-		return "Comment Saved";
+		return "Commented!";
 	}
 
 	public void deleteById(int id) {
